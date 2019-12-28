@@ -1,26 +1,17 @@
 <view>
   <form bindsubmit='upload'>
-<audio poster="{{poster}}" name="{{name}}" author="{{author}}" src="{{src}}" id="myAudio" controls loop></audio>
-<button type="primary" bindtap="audioPause">暂停</button>
-
-    <!-- <radio-group name="bgmId">
-
-
+    <radio-group name="bgmId">
       <block wx:for="{{bgmList}}">
         <view class='container'>
           <audio name="{{item.name}}" author="{{item.author}}" src="{{serverUrl}}{{item.path}}" style='width:300px' id="myAudio" controls loop></audio>
           <radio style='margin-top:20px;' value='{{item.id}}'></radio>
         </view>
       </block>
-
-
-    </radio-group> -->
-
+    </radio-group>
     <view class="inputView">
       <label class="loginLabel">视频描述：</label>
       <input name="desc" class="inputText" placeholder="说点什么吧" />
     </view>
-
     <!-- 提交 -->
     <button class="submitBtn" type="primary" form-type='submit'>上传视频</button>
 

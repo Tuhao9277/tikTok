@@ -1,5 +1,11 @@
 const app = getApp()
-
+import {
+  api
+} from './../../utils/api'
+const userInfo = app.getGlobalUserInfo();
+const {
+  serverUrl
+} = app
 Page({
 
   /**
@@ -14,31 +20,93 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function(params) {
+    var me = this
+    me.setData({
+      videoParams: params
+    })
+    api.getBgmList().then(res => {
+      me.setData({
+        bgmList: res.data,
+        serverUrl
+      })
+    })
 
   },
+  upload: function(e) {
+    var me = this
+    const {
+      bgmId,
+      desc
+    } = e.detail.value
+    const {
+      duration,
+      tmpHeight,
+      tmpWidth,
+      tmpVideoUrl,
+    } = me.data.videoParams
+    // 上传短视频
+    wx.showLoading({
+      title: '上传中...',
+    })
 
+    wx.uploadFile({
+      url: serverUrl + '/video/upload',
+      formData: {
+        userId: userInfo.id,    // fixme 原来的 app.userInfo.id
+        bgmId,
+        desc,
+        videoSeconds: duration,
+        videoHeight: tmpHeight,
+        videoWidth: tmpWidth
+      },
+      filePath: tmpVideoUrl,
+      name: 'file',
+      header: {
+        'content-type': 'application/json', // 默认值
+        'headerUserId': userInfo.id,
+        'headerUserToken': userInfo.userToken
+      },
+      success: function (res) {
+        const data = JSON.parse(res.data);
+        wx.hideLoading();
+        if (data.status == 200) {
+          wx.showToast({
+            title: '上传成功!~~',
+            icon: "success"
+          });
+          // 上传成功后跳回之前的页面
+          wx.navigateBack({
+            delta: 1
+          })
+
+        } else if (res.data.status == 502) {
+          wx.showToast({
+            title: res.data.msg,
+            duration: 2000,
+            icon: "none"
+          });
+          wx.redirectTo({
+            url: '../userLogin/login',
+          })
+        } else {
+          wx.showToast({
+            title: '上传失败!~~',
+            icon: "success"
+          });
+        }
+
+      }
+    })
+
+
+
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady(e) {
-    // 使用 wx.createAudioContext 获取 audio 上下文 context
-    this.audioCtx = wx.createAudioContext('myAudio')
-    this.audioCtx.setSrc('http://ws.stream.qqmusic.qq.com/M500001VfvsJ21xFqb.mp3?guid=ffffffff82def4af4b12b3cd9337d5e7&uin=346897220&vkey=6292F51E1E384E06DCBDC9AB7C49FD713D632D313AC4858BACB8DDD29067D3C601481D36E62053BF8DFEAF74C0A5CCFADD6471160CAF3E6A&fromtag=46')
-    this.audioCtx.play()
-  },
-  audioPlay() {
-    this.audioCtx.play()
-  },
-  audioPause() {
-    this.audioCtx.pause()
-  },
-  audio14() {
-    this.audioCtx.seek(14)
-  },
-  audioStart() {
-    this.audioCtx.seek(0)
-  },
+  onReady(e) {},
+
   /**
    * 生命周期函数--监听页面显示
    */
