@@ -107,9 +107,8 @@ Page({
     var videoList = me.data.videoList;
     var arrindex = e.target.dataset.arrindex;
     var videoInfo = JSON.stringify(videoList[arrindex]);
-
     wx.redirectTo({
-      url: '../videoinfo/videoinfo?videoInfo=' + videoInfo
+      url: '../videoInfo/videoInfo?videoInfo=' + encodeURIComponent(videoInfo),
     })
   }
 

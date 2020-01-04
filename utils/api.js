@@ -40,8 +40,25 @@ class Api extends HTTP {
     return this.post(`/user/queryPublisher?loginUserId=${loginUserId}&videoId=${videoId}&publishUserId=${publisherId}`)
   }
   // 获取视频评论信息
-  getCommentList(page, userId) {
+  getCommentList(page, videoId) {
     return this.post(`/video/getVideoComments?page=${page}&pageSize=5&videoId=${videoId}`)
+  }
+  // 点赞
+  setLike(userId, videoInfoId, videoCreaterId) {
+    return this.post(`/video/userLike?userId=${userId}&videoId=${videoInfoId}&videoCreaterId=${videoCreaterId}`)
+  }
+  // 取消点赞
+  setUnLike(userId, videoInfoId, videoCreaterId) {
+    return this.post(`/video/userUnLike?userId=${userId}&videoId=${videoInfoId}&videoCreaterId=${videoCreaterId}`)
+  }
+  // 举报视频
+  reportUser(params){
+    return this.post('/user/reportUser',params)
+  }
+  // 发起评论
+  saveComment(fatherCommentId,toUserId,params){
+    return this.post(`/video/saveComment?fatherCommentId=${fatherCommentId}&toUserId=${toUserId}`,params)
+
   }
 }
 const api = new Api()

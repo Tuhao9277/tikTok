@@ -13,7 +13,7 @@ Page({
       redirectUrl = redirectUrl.replace(/#/g, "?");
       redirectUrl = redirectUrl.replace(/@/g, "=");
 
-      me.redirectUrl = redirectUrl;
+      me.redirectUrl = (decodeURIComponent(redirectUrl))
     }
   },
 

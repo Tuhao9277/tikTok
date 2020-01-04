@@ -5,7 +5,8 @@
     "pages/userLogin/login",
     "pages/chooseBgm/chooseBgm",
     "pages/userRegist/regist",
-    "pages/videoInfo/videoInfo"
+    "pages/videoInfo/videoInfo",
+    "pages/report/report"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -20,7 +21,7 @@
         "iconPath": "pages/resource/images/index.png",
         "selectedIconPath": "pages/resource/images/index.png",
         "pagePath": "pages/index/index",
-        "text":"首页"
+        "text": "首页"
       },
       {
         "iconPath": "pages/resource/images/mine.png",
